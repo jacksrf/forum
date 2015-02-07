@@ -1,0 +1,29 @@
+<h2><%= @entry.title %></h2>
+<p><%= @entry.content %></p>
+<time><%= @entry.created_at.localtime.strftime("%b %d, %Y - %l:%M %P") %></time>
+</br ></br >
+<time><%= @entry.updated_at.localtime.strftime("%b %d, %Y - %l:%M %P") %></time>
+</br ></br >
+  <% @comments.each do |comment| %>
+    <div><p><%= comment.content %></p>
+    <h6><%= comment.username %></h6>
+    <p><%= link_to "delete", [comment.entry, comment], :confirm => "Are you sure you want to delete this comment?", :method => :delete %></p></div>
+    <% end %>
+
+<%= form_for @comment do |f| %>
+ <%= f.label :content %>
+ <%= f.text_area :content %>
+ </br >
+ <%= f.hidden_field :username, :value => session[:username] %>
+ <%= f.hidden_field :user_id, :value => session[:user_id] %>
+ <%= f.hidden_field :entry_id, :value => @entry.id %>
+
+ </br >
+ <%= f.submit %>
+<% end %>
+</br ></br >
+<% if @entry.user_id == session[:user_id] %>
+  <%= link_to "delete", entry_path(@entry), method: :delete %>
+  <%= link_to "edit", edit_entry_path(@entry) %>
+<% end %>
+<%= link_to "Go home", entries_path %>

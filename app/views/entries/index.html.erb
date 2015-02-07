@@ -1,0 +1,12 @@
+<% @entries.each do |entry| %>
+    <h2><%= link_to entry.title, entry_path(entry) %></h2>
+  </br ></br >
+  <% end %>
+
+<h1><%= link_to "Add new Entry", new_entry_path %>
+
+<form method="POST" action="/session">
+  <input name="authenticity_token" value="<%= form_authenticity_token() %>" type="hidden">
+  <input name="_method" value="DELETE" type="hidden">
+  <button>Logout</button>
+</form>
